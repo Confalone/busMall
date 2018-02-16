@@ -81,22 +81,27 @@ function showTally() {
 
 Product.container.addEventListener('click', handleClick);
 displayPics();
+
 function makeChart () {
   var data= [];
+  var labels =[];
 
   for (i =0; i < Product.all.length; i++) {
     data.push(Product.all[i].votes);
+    labels.push(Product.all[i].name);
+    console.log('loading chart array ' +i);
   }
-
+  
   var ctx =document.getElementById('chart').getContext('2d');
 
   var myChart = new Chart (ctx, {
     type: 'bar',
     data: {
-      lables: Product.names,
+      lables: labels,
       datasets: [{
         label: 'number of votes',
         data: data,
+        backgroundColor:'red'
       }]
     },
     options: {
