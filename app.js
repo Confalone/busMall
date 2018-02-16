@@ -70,13 +70,36 @@ function handleClick(event) {
   displayPics();
 }
 
-function showTally() {
-  for(var i=0; i<Product.all.length; i++) {
-    var liEl = document.createElement('li');
-    liEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views!';
-    Product.tally.appendChild(liEl);
-  }
-}
+// function showTally() {
+//   for(var i=0; i<Product.all.length; i++) {
+//     var liEl = document.createElement('li');
+//     liEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views!';
+//     Product.tally.appendChild(liEl);
+//   }
+// }
 
 Product.container.addEventListener('click', handleClick);
 displayPics();
+
+var ctx =document.getElementById('chart').getInputContext('2d');
+
+var myChart = new Chart (ctx, {
+  type: 'bar',
+  data: {
+    lables: Product.names,
+    datasets: [{
+      label: 'number of votes',
+      data: data,
+      backgroundColor: Product.names
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+});
