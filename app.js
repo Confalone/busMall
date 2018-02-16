@@ -55,8 +55,9 @@ function handleClick(event) {
   if(Product.totalClicks > 24) {
     Product.container.removeEventListener('click', handleClick);
     showTally();
+    makeChart();
   }
-  if(event.target.id === 'image_container') {
+  if(event.target.id === 'image-container') {
     return alert('Please click on an image, thanks.');
   }
 
@@ -70,36 +71,42 @@ function handleClick(event) {
   displayPics();
 }
 
-// function showTally() {
-//   for(var i=0; i<Product.all.length; i++) {
-//     var liEl = document.createElement('li');
-//     liEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views!';
-//     Product.tally.appendChild(liEl);
-//   }
-// }
+function showTally() {
+  for(var i=0; i<Product.all.length; i++) {
+    var liEl = document.createElement('li');
+    liEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views!';
+    Product.tally.appendChild(liEl);
+  }
+}
 
 Product.container.addEventListener('click', handleClick);
 displayPics();
+function makeChart () {
+  var data= [];
 
-var ctx =document.getElementById('chart').getInputContext('2d');
-
-var myChart = new Chart (ctx, {
-  type: 'bar',
-  data: {
-    lables: Product.names,
-    datasets: [{
-      label: 'number of votes',
-      data: data,
-      backgroundColor: Product.names
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
+  for (i =0; i < Product.all.length; i++) {
+    data.push(Product.all[i].votes);
   }
-});
+
+  var ctx =document.getElementById('chart').getContext('2d');
+
+  var myChart = new Chart (ctx, {
+    type: 'bar',
+    data: {
+      lables: Product.names,
+      datasets: [{
+        label: 'number of votes',
+        data: data,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
