@@ -77,10 +77,16 @@ function showTally() {
     liEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views!';
     Product.tally.appendChild(liEl);
   }
+  var stringProduct = JSON.stringify(Product.all);
+  localStorage.setItem("Products", stringProduct);
 }
 
 Product.container.addEventListener('click', handleClick);
-displayPics();
+// displayPics();
+
+//var stringProduct = JSON.stringify(Product.all);
+// localStorage.setItem("Products", stringProduct);
+
 
 function makeChart () {
   var data= [];
@@ -115,3 +121,52 @@ function makeChart () {
     }
   });
 }
+
+function getLocalStorage() {
+  displayPics();
+
+  if (localStorage.Products) {
+    var stringProduct = localStorage.getItem("Products");
+    var htmlEl = document.getElementById('tally');
+    // console.log(htmlEl)
+    var productArr = JSON.parse(stringProduct);
+
+    var data = [];
+    var labels = [];
+    for(var i=0; i< productArr.length; i++) {
+      var liEl = document.createElement('li');
+      liEl.textContent = productArr[i].name + ' has ' + productArr[i].votes + ' votes in ' + productArr[i].views + ' views!';
+      Product.tally.appendChild(liEl);
+
+      data.push(productArr[i].votes);
+      labels.push(productArr[i].name);
+    }
+    console.log(stringProduct)
+    // console.log(product);
+    // for (var )
+    var ctx =document.getElementById('chart').getContext('2d');
+
+    var myChart = new Chart (ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'number of votes',
+          data: data,
+          backgroundColor: 'red'
+        }]
+      },
+      options : {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginatZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+}
+
+getLocalStorage();
