@@ -78,7 +78,7 @@ function showTally() {
     Product.tally.appendChild(liEl);
   }
   var stringProduct = JSON.stringify(Product.all);
-  localStorage.setItem("Products", stringProduct);
+  localStorage.setItem('Products', stringProduct);
 }
 
 Product.container.addEventListener('click', handleClick);
@@ -97,13 +97,13 @@ function makeChart () {
     labels.push(Product.all[i].name);
     console.log('loading chart array ' +i);
   }
-  
+
   var ctx =document.getElementById('chart').getContext('2d');
 
   var myChart = new Chart (ctx, {
     type: 'bar',
     data: {
-      labels: labels, 
+      labels: labels,
       datasets: [{
         label: 'number of votes',
         data: data,
@@ -124,9 +124,12 @@ function makeChart () {
 
 function getLocalStorage() {
   displayPics();
-
   if (localStorage.Products) {
-    var stringProduct = localStorage.getItem("Products");
+
+
+    Product.container.removeEventListener('click', handleClick);
+
+    var stringProduct = localStorage.getItem('Products');
     var htmlEl = document.getElementById('tally');
     // console.log(htmlEl)
     var productArr = JSON.parse(stringProduct);
@@ -141,7 +144,7 @@ function getLocalStorage() {
       data.push(productArr[i].votes);
       labels.push(productArr[i].name);
     }
-    console.log(stringProduct)
+    console.log(stringProduct);
     // console.log(product);
     // for (var )
     var ctx =document.getElementById('chart').getContext('2d');
