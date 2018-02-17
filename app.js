@@ -97,7 +97,7 @@ function makeChart () {
   var myChart = new Chart (ctx, {
     type: 'bar',
     data: {
-      lables: labels,
+      labels: labels, 
       datasets: [{
         label: 'number of votes',
         data: data,
